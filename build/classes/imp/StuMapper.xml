@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.StuDao">
+	<!-- 添加一条 -->
+	<insert id="addStu">
+		insert into
+		studentinfo(stuName,stuAge,stuGender,stuTelephone)values(#{name},#{age},#{gender},#{telephone})
+	</insert>
+	<!-- 批量添加 -->
+	<insert id="addStus">
+		insert into studentinfo(stuName,stuAge,stuGender,stuTelephone)values
+		<trim prefixOverrides=",">
+			<foreach item="stulist" collection="list" >
+				,(#{stulist.id},#{stulist.age},#{stulist.gender},#{stulist.telephone})
+			</foreach>
+		</trim>
+	</insert>
+	<!-- 修改 -->
+	<update id="updateStu">
+
+	</update>
+	<!-- 删除 -->
+	<delete id="delStu">
+
+	</delete>
+	<!-- 查询 -->
+	<resultMap type="entity.Student" id="resmap">
+		<id property="id" column="stuNo" />
+		<result property="name" column="stuName" />
+		<result property="age" column="stuAge" />
+		<result property="gender" column="stuGender" />
+		<result property="telephone" column="stuTelephone" />
+	</resultMap>
+	<sql id="selStuList">
+		select * from studentinfo
+	</sql>
+	<select id="selStu" resultMap="resmap">
+		<include refid="selStuList">
+		</include>
+	</select>
+</mapper>
